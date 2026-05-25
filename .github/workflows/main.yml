@@ -1,7 +1,7 @@
 
   name: "CHAD-OS"
   phase: "1-bootstrap"
-  version: "0.1.0"
+  version: "1.0"
   description: "AI-native operating system bootstrap configuration."
 
 kernel:

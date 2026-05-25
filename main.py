@@ -1,4 +1,214 @@
 """
+CHAD OS – Phase 1 Bootstrap
+One-file minimal OS:
+- identity
+- memory
+- context
+- continuity
+- reasoning core
+- event loop (1 tick)
+- zero imports
+- zero folders
+- zero errors
+"""
+
+# =========================
+# CONFIG (YAML EMBEDDED)
+# =========================
+
+chad_os_config = """
+system:
+  name: "CHAD-OS"
+  phase: "1-bootstrap"
+  version: "0.1.0"
+  description: "Minimal AI-native OS bootstrap."
+boot:
+  ticks: 1
+"""
+
+# =========================
+# KERNEL
+# =========================
+
+class MessageBus:
+    def __init__(self):
+        self._queue = []
+
+    def publish(self, message):
+        self._queue.append(message)
+
+    def process_pending(self):
+        self._queue.clear()
+
+
+class Scheduler:
+    def tick(self):
+        pass
+
+
+class EventLoop:
+    def tick(self):
+        return 1
+
+
+def bootstrap_system():
+    return {
+        "message_bus": MessageBus(),
+        "scheduler": Scheduler(),
+        "event_loop": EventLoop(),
+    }
+
+
+# =========================
+# SERVICES
+# =========================
+
+class IdentityService:
+    def __init__(self):
+        self._system_id = "CHAD-OS"
+
+    def get_system_id(self):
+        return self._system_id
+
+
+class MemoryService:
+    def __init__(self):
+        self._store = {}
+
+    def set(self, key, value):
+        self._store[key] = value
+
+    def get(self, key, default=None):
+        return self._store.get(key, default)
+
+
+class ContextEngine:
+    def __init__(self, memory):
+        self._memory = memory
+        self._context = {}
+
+    def set_context(self, key, value):
+        self._context[key] = value
+
+    def snapshot(self):
+        return dict(self._context)
+
+
+class IdentityGraph:
+    def __init__(self):
+        self._events = []
+
+    def add_event(self, actor, data):
+        self._events.append({"actor": actor, "data": data})
+
+
+class ContinuityService:
+    def __init__(self, graph):
+        self._graph = graph
+
+    def record_event(self, actor, data):
+        self._graph.add_event(actor, data)
+
+
+# =========================
+# INTELLIGENCE
+# =========================
+
+class HeuristicEngine:
+    def decide(self, signal):
+        return "proceed"
+
+
+class PredictionEngine:
+    def predict(self, signal):
+        return {"risk": "low"}
+
+
+class ReasoningCore:
+    def __init__(self, heuristic, prediction):
+        self._heuristic = heuristic
+        self._prediction = prediction
+
+    def process(self, signal):
+        return {
+            "decision": self._heuristic.decide(signal),
+            "prediction": self._prediction.predict(signal),
+        }
+
+
+class AdaptiveHooks:
+    def adapt(self, result):
+        pass
+
+
+# =========================
+# UI
+# =========================
+
+class RenderingEngine:
+    def render(self, message):
+        print(message)
+
+
+# =========================
+# SYSTEM TOOLS
+# =========================
+
+def system_heartbeat():
+    return "Heartbeat OK"
+
+
+# =========================
+# MAIN BOOT
+# =========================
+
+def main():
+    kernel = bootstrap_system()
+    message_bus = kernel["message_bus"]
+    scheduler = kernel["scheduler"]
+    event_loop = kernel["event_loop"]
+
+    identity = IdentityService()
+    memory = MemoryService()
+    context = ContextEngine(memory)
+    graph = IdentityGraph()
+    continuity = ContinuityService(graph)
+
+    heuristic = HeuristicEngine()
+    prediction = PredictionEngine()
+    reasoning = ReasoningCore(heuristic, prediction)
+    adaptive = AdaptiveHooks()
+    renderer = RenderingEngine()
+
+    context.set_context("system_id", identity.get_system_id())
+    context.set_context("boot_phase", "phase_1")
+    signal = context.snapshot()
+
+    result = reasoning.process(signal)
+    adaptive.adapt(result)
+    decision = result["decision"]
+
+    continuity.record_event(
+        actor=identity.get_system_id(),
+        data={"event": "boot", "decision": decision, "signal": signal},
+    )
+
+    scheduler.tick()
+    event_loop.tick()
+    message_bus.process_pending()
+
+    renderer.render(f"CHAD OS Booted. Decision: {decision}")
+    renderer.render(system_heartbeat())
+    renderer.render("C.H.A.D OS initialization complete.")
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+"""
 CHAD OS – Phase 1.5 Evolution (ONE GIANT BLOCK)
 Includes:
 - Embedded YAML config

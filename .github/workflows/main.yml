@@ -1,1 +1,54 @@
+system:
+  name: "CHAD-OS"
+  phase: "1-bootstrap"
+  version: "0.1.0"
+  description: "AI-native operating system bootstrap configuration."
 
+kernel:
+  message_bus: enabled
+  scheduler: enabled
+  event_loop: enabled
+
+services:
+  identity:
+    enabled: true
+    system_id: "CHAD-OS"
+  memory:
+    enabled: true
+    type: "in-memory"
+  context_engine:
+    enabled: true
+  event_service:
+    enabled: true
+  continuity:
+    enabled: true
+    storage: "identity-graph"
+  persistence:
+    enabled: false
+
+intelligence:
+  heuristic_engine:
+    enabled: true
+    mode: "simple"
+  prediction_engine:
+    enabled: true
+    risk_model: "basic"
+  reasoning_core:
+    enabled: true
+  adaptive_hooks:
+    enabled: true
+
+ui:
+  rendering_engine:
+    enabled: true
+  interaction_model:
+    enabled: false
+
+apps:
+  system_tools:
+    heartbeat: true
+
+boot:
+  ticks: 1
+  record_continuity: true
+  render_output: true

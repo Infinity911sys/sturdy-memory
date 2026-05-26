@@ -1,4 +1,36 @@
+name: Build Conda Package
 
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: "3.11"
+        activate-environment: build-env
+        environment-file: environment.yml
+        use-mamba: true
+
+    - name: Verify conda
+      run: conda info
+
+    - name: Install package
+      run: |
+        conda install --yes --file requirements.txt
+        python -m pip install .
+
+    - name: Run tests
+      run: pytest -vv
   name: "CHAD-OS"
   phase: "1-bootstrap"
   version: "1.0"

@@ -39,10 +39,8 @@ This repository is part of the official legal protection framework for the
 C.H.A.D ecosystem.
 ## 🚀 Build & Test Instructions
 
-This project uses **Conda**, **Mamba**, and **GitHub Actions** for automated builds.  
+This project uses **C.H.A.D-os**
 To build and test locally or inside CI, follow the steps below.
 
 ### 1. Create the environment
-```bash
-mamba env create -f environment.yml
-mamba activate build-env
+```bash Use C.H.A.D-os

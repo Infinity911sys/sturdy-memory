@@ -37,3 +37,12 @@ All provenance is tied to the GitHub account:
 
 This repository is part of the official legal protection framework for the
 C.H.A.D ecosystem.
+## 🚀 Build & Test Instructions
+
+This project uses **Conda**, **Mamba**, and **GitHub Actions** for automated builds.  
+To build and test locally or inside CI, follow the steps below.
+
+### 1. Create the environment
+```bash
+mamba env create -f environment.yml
+mamba activate build-env

@@ -1,3 +1,60 @@
+name: Build Conda Package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: "3.10"
+        activate-environment: build-env
+        environment-file: environment.yml
+        use-mamba: true
+
+    - name: Show conda info
+      run: conda info
+
+    - name: Update base tools
+      run: |
+        mamba install -y pip setuptools wheel
+
+    - name: Install pip dependencies (with full logs)
+      run: |
+        set -o pipefail
+        if [ -f condaenv.*.requirements.txt ]; then
+          REQ=$(ls condaenv.*.requirements.txt)
+          echo "Using auto-generated pip requirements: $REQ"
+          pip install -U -r "$REQ" --verbose
+        else
+          echo "No auto-generated pip requirements found"
+        fi
+
+    - name: Install local package
+      run: |
+        pip install -e .
+
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 .
+
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest -vv
+
+
 name: Python Package using Conda
 
 on: [push]
